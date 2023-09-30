@@ -8,7 +8,7 @@ import { handle_submit_local_flexible } from "./S2_LocalFelxible";
 import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
 import moment, {max} from 'moment'
-import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
+import G1_MessageModal from "../../GlobalComponent/G1_MessageModal";
 import {check_todays_gatepass} from "./S0_CommonChecks";
 import {check_valid_day} from "./S8_AutoApprovalCheck";
 import {departure_time} from "./S8_AutoApprovalCheck";
