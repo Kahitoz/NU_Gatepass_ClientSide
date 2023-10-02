@@ -3,7 +3,8 @@ import designs from "../StudentStyling/S5_ProfileCSS";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import profilePhoto from "../icons/icon-profile.png"
+import profilePhoto from "../icons/icon-profile.png";
+import ImageModal from "../../GlobalComponent/G2_ImageModal";
 
 const S5_Profile = () => {
   const [userName, setUserName] = useState("");
@@ -11,8 +12,16 @@ const S5_Profile = () => {
   const [studentHostel, setStudentHostel] = useState("");
   const [studentEnrollment, setStudentEnrollment] = useState("");
   const [studentContact, setStudentContact] = useState("");
-  const [profilePath , setProfilePath] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [profilePath, setProfilePath] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [upload, setUpload] = useState(false);
+
+  const openUpload = () =>{
+    setUpload(true);
+  }
+  const closeUpload = () =>{
+    setUpload(false);
+  }
 
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
@@ -20,11 +29,14 @@ const S5_Profile = () => {
     const email = decoded.data.email_id;
 
     async function fetchUserDetails() {
-      const response = await fetch(`http://127.0.0.1:4000/gatepass/v2/user_details/${email}`, {
-        headers: {
-          Authorization: userToken,
-        },
-      });
+      const response = await fetch(
+        `http://127.0.0.1:4000/gatepass/v2/user_details/${email}`,
+        {
+          headers: {
+            Authorization: userToken,
+          },
+        }
+      );
       const data = await response.json();
       const uniqueUserIds = [...new Set(data.user_id)];
       setUserName(data.name);
@@ -43,11 +55,14 @@ const S5_Profile = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:4000/gatepass/v2/student/image/${image}`, {
-          headers: {
-            Authorization: userToken,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:4000/gatepass/v2/student/image/${image}`,
+          {
+            headers: {
+              Authorization: userToken,
+            },
+          }
+        );
         if (response.ok) {
           const imageBlob = await response.blob();
           const imageURL = URL.createObjectURL(imageBlob);
@@ -56,15 +71,13 @@ const S5_Profile = () => {
           setProfileImage(profilePhoto);
         }
       } catch (error) {
-        console.error('Error fetching user image:', error);
+        console.error("Error fetching user image:", error);
         setProfileImage(profilePhoto);
       }
     }
 
     fetchUserImage(profilePath);
-
   }, [profilePath]);
-
 
   return (
     <div className={`${designs.d1}`}>
@@ -73,15 +86,21 @@ const S5_Profile = () => {
           <div className={`${designs.d4}`}>
             <div className={`${designs.d6}`}>
               <img
-                  src={profileImage || profilePhoto}
-                  alt="User"
-                  className={`w-24 h-24 rounded-full`}
-                  onLoad={() =>  profileImage}
+                src={profileImage || profilePhoto}
+                alt="User"
+                className={`w-24 h-24 rounded-full`}
+                onLoad={() => profileImage}
               />
             </div>
             <div className={`${designs.d7}`}>
               <div className={`${designs.d8}`}>
-                <button className={`${designs.d9}`}>Request Upload</button>
+                <button
+                  className={`${designs.d9}`}
+                  onClick={openUpload}
+                >
+                  Request Upload
+                </button>
+                <ImageModal isOpen={upload} isClose={closeUpload}/>
               </div>
             </div>
           </div>
