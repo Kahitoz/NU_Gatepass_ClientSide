@@ -47,12 +47,11 @@ const O1_skeleton = () => {
       setError(error);
     }
   }
-
+  const client_id = process.env.REACT_APP_CLIENT_ID;
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id:
-        "372946592599-u1gj83quodhpdae46ejslj4tto3mn3vn.apps.googleusercontent.com",
+      client_id: client_id,
       callback: handleCallbackResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
@@ -82,7 +81,7 @@ const O1_skeleton = () => {
   if (error) {
     return (
       <>
-      <FailedToFetchScreen Error={error.message}/>
+        <FailedToFetchScreen Error={error.message} />
       </>
     );
   }
