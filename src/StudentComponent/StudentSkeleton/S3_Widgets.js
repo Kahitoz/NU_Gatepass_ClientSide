@@ -28,14 +28,10 @@ const S3_Widgets = () => {
     };
 
     fetchData();
+    statusCheck();
+    fetchGatepassStatus()
 
-    const interval = setInterval(() => {
-      fetchData();
-      statusCheck();
-      fetchGatepassStatus();
-    }, 500);
 
-    return () => clearInterval(interval);
   }, [getWeekLimit]);
 
   const statusCheck = () => {
