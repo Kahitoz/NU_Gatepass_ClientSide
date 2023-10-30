@@ -6,7 +6,7 @@ const ImageModal = ({ isOpen, isClose }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const decode = jwtDecode(Cookies.get('ACCESS_TOKEN'));
     const user_id = decode.data.user_id;
-
+    const [message, setMessage] = useState("")
     const handleImageUploadFunc = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -42,9 +42,11 @@ const ImageModal = ({ isOpen, isClose }) => {
                 })
                 .then((data) => {
                     console.log("Image uploaded successfully:", data);
+                    setMessage("Image Uploaded Successfully")
                 })
                 .catch((error) => {
                     console.error("Image upload failed:", error);
+                    //setMessage("Image Failed to upload")
                 });
         }
     };
@@ -78,7 +80,7 @@ const ImageModal = ({ isOpen, isClose }) => {
                                 onChange={handleImageUploadFunc}
                             />
                             <p className="font-bold text-center cursor-pointer mt-3 hover:text-red-700">
-                                Upload
+                                {message}
                             </p>
                             <p
                                 onClick={isClose}
