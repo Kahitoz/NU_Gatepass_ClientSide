@@ -25,6 +25,7 @@ const S6_FormFunctionality = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
+  const [wMessageVisible, setWMessageVisible] = useState(false);
   const [departureTime, setDepartureTime] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -145,6 +146,7 @@ const S6_FormFunctionality = () => {
     setDestinationVisible(false);
     setReasonVisible(false);
     setWardenVisible(false);
+    setWMessageVisible(false)
 
     if (option === "Local Flexible") {
       setReasonVisible(true);
@@ -157,6 +159,14 @@ const S6_FormFunctionality = () => {
       setDestinationVisible(true);
       setReasonVisible(true);
       setWardenVisible(true);
+    }else if(option === 'Non Returnable'){
+      setDestinationVisible(true)
+      setDepartureDateVisible(true);
+      setDepartureTimeVisible(false);
+      setArrivalDateVisible(false);
+      setArrivalTimeVisible(false);
+      setWardenVisible(true)
+      setWMessageVisible(true)
     }
   };
 
@@ -199,6 +209,7 @@ const S6_FormFunctionality = () => {
             wardenVisible={wardenVisible}
             departureTime={departureTime}
             arrivalTime={arrivalTime}
+            wMessage = {wMessageVisible}
             handleOptionSelect={handleOptionSelect}
             handleWselect={handleWselect}
             handlewDropDown={handlewDropDown}

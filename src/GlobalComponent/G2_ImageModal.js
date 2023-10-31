@@ -7,48 +7,43 @@ const ImageModal = ({ isOpen, isClose }) => {
     const decode = jwtDecode(Cookies.get('ACCESS_TOKEN'));
     const user_id = decode.data.user_id;
     const [message, setMessage] = useState("")
-    const handleImageUploadFunc = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setSelectedImage(e.target.result);
-            };
-            reader.readAsDataURL(file);
-
-            // Modify the file name to include the user_id before uploading.
-            const fileExtension = file.name.split('.').pop(); // Get the file extension
-            const fileName = `${user_id}.${fileExtension}`;
-
+    const handleImageUploadFunc = () => {
+        if(selectedImage){
+            setMessage("Image Uploaded Successfully")
+            const getFileExtention = selectedImage.name.split('.').pop();
+            const filename = `${user_id}.${getFileExtention}`;
             const formData = new FormData();
-            formData.append("image", file, fileName);
-
-            // Replace 'authorization' with your actual authorization token.
+            formData.append("image", selectedImage, filename);
             const authorization = Cookies.get('ACCESS_TOKEN');
-
-            fetch("http://localhost:4000/gatepass/v2/student/profile/upload", {
-                method: "POST",
-                headers: {
-                    Authorization: authorization,
+            fetch("http://localhost:4000/gatepass/v2/student/profile/upload",{
+                method:"POST",
+                headers:{
+                    Authorization:authorization,
                 },
                 body: formData,
             })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json(); // Assuming the API returns JSON.
-                    } else {
-                        throw Error("Image upload failed");
+                .then((response) =>{
+                    if(response.ok){
+                        return response.json();
+                    }else{
+                        throw Error("Image Upload Failed");
                     }
                 })
                 .then((data) => {
-                    console.log("Image uploaded successfully:", data);
-                    setMessage("Image Uploaded Successfully")
+                    setMessage(data.message)
                 })
                 .catch((error) => {
-                    console.error("Image upload failed:", error);
-                    //setMessage("Image Failed to upload")
+                    console.log(error)
                 });
+
+        }else{
+            setMessage("Please Select an image")
         }
+    };
+
+    const handleImageSelect = (event) =>{
+        const file = event.target.files[0];
+        setSelectedImage(file)
     };
 
     return (
@@ -72,13 +67,17 @@ const ImageModal = ({ isOpen, isClose }) => {
                                     </div>
                                 )}
                             </div>
-                            <input
-                                type="file"
-                                id="imageInput"
-                                accept="image/*"
-                                name={`image`}
-                                onChange={handleImageUploadFunc}
-                            />
+                                <input
+                                    type="file"
+                                    id="imageInput"
+                                    accept="image/*"
+                                    name={`image`}
+                                    onChange={handleImageSelect}
+                                />
+                            <button
+                            onClick={handleImageUploadFunc}
+                            className={`bg-red-700 text-white p-2 rounded-full hover:bg-red-600`}
+                            >Upload</button>
                             <p className="font-bold text-center cursor-pointer mt-3 hover:text-red-700">
                                 {message}
                             </p>
