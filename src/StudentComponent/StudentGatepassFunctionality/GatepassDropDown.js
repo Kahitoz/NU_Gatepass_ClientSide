@@ -5,6 +5,8 @@ import LocalFixedForm from "./LocalFixed/localfixedform";
 import LocalFlexibleForm from "./LocalFlexible/localflexibleform";
 import OutStationForm from "./Outstation/outstationform";
 import EmergencyForm from "./Emergency/emergencyForm";
+import NonReturnAbleForm from "./NonReturnable/nonreturnableform";
+import VisitorForm from "./Visitor/VisitorForm";
 const GatepassDropDown = () => {
   const [selectedOption, setSelectedOption] = useState("localfixed");
 
@@ -33,13 +35,16 @@ const GatepassDropDown = () => {
           <option value="localflexible">Local Flexible</option>
           <option value="outstation">Outstation</option>
           <option value="emergency">Emergency</option>
-          <option value="Non Returnable">Non Returnable</option>
+          <option value="NonReturnable">Non Returnable</option>
+          <option value="visitor">Visitor</option>
         </select>
         <div>
           {selectedOption == "localfixed" && <LocalFixedForm />}
           {selectedOption == "localflexible" && <LocalFlexibleForm />}
           {selectedOption == "outstation" && <OutStationForm />}
           {selectedOption == "emergency" && <EmergencyForm />}
+          {selectedOption == "NonReturnable" && <NonReturnAbleForm/>}
+          {selectedOption == "visitor" && <VisitorForm/>}
         </div>
       </div>
     </>
