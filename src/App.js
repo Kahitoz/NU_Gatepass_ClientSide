@@ -20,9 +20,11 @@ import ChiefWardenTowerAllot from "./ChiefWardenComponent/ChiefWardenScreens/Chi
 import ChiefWardenNotifications from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenNotifications";
 import ChiefWardenProfileRequests from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenProfileRequests";
 import { PrivateRoute } from "./PrivateRoutes";
+import GatepassDropDown from "./StudentComponent/StudentGatepassFunctionality/GatepassDropDown";
+import "./App.css"
 function App() {
   return (
-    <div>
+    <div className="App">
       <Router>
         <Routes>
           <Route exact path="/" element={<Login />}></Route>
@@ -39,6 +41,7 @@ function App() {
               path="/student/gatepass"
               element={<StudentGatepass />}
             ></Route>
+            <Route exact path="/student/newgatepass" element={<GatepassDropDown/>}></Route>
           </Route>
 
           <Route element={<PrivateRoute role="5" />}>

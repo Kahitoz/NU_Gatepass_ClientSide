@@ -3,7 +3,7 @@ import designs from "../StudentStyling/S3_WidgetsCSS";
 import Cookies from "js-cookie";
 import { week } from "../StudentGatepassHandler/S7_ParameterConfig";
 import { checkBlacklist } from "../StudentGatepassHandler/S1_LocalFixed";
-import { fetchData_GP_used } from "../StudentGatepassHandler/S1_LocalFixed";
+import {remaining_local_fixed} from "../../StudentComponent/StudentGatepassFunctionality/LocalFixed/localfixedlogic"
 
 const S3_Widgets = () => {
   const [gatepassStatus, setGatepassStatus] = useState("");
@@ -18,7 +18,7 @@ const S3_Widgets = () => {
   useEffect(() => {
     const fetchData = async () => {
       const userToken = Cookies.get("ACCESS_TOKEN");
-      const localFixedUsed = await fetchData_GP_used(userToken);
+      const localFixedUsed = await remaining_local_fixed(userToken);
 
       let config = await week(accessToken);
       const total = config.weekLimit;
