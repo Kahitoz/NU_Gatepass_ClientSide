@@ -55,6 +55,9 @@ const NonReturnAbleForm = () => {
         <button className="bg-text-2 p-3 rounded-lg mt-5 text-white">
           Apply Gatepass
         </button>
+        <p className="text-red-500 font-bold">
+          *Please be sure to pay all the dues before saying us farewell
+        </p>
       </div>
     </div>
   );
