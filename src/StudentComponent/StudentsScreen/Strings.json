@@ -2,5 +2,6 @@
     "navbar_heading_1":"NIIT Univeristy",
     "list_1":"Home",
     "list_2":"Gatpasses",
-    "alt-1":"logout"
+    "alt-1":"logout",
+    "api":"http://127.0.0.1:4000"
 }
