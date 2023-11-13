@@ -29,7 +29,7 @@ const GatepassDropDown = () => {
           name="dropdown"
           value={selectedOption}
           onChange={handleSelectedOption}
-          className="p-2 rounded-lg border border-red-100 mt-2 shadow-xl"
+          className="p-2 rounded-lg border border-red-100 mt-2 shadow-sm"
         >
           <option value="localfixed">Local Fixed</option>
           <option value="localflexible">Local Flexible</option>
@@ -38,7 +38,7 @@ const GatepassDropDown = () => {
           <option value="NonReturnable">Non Returnable</option>
           <option value="visitor">Visitor</option>
         </select>
-        <div>
+        <div className="mt-4  ">
           {selectedOption == "localfixed" && <LocalFixedForm />}
           {selectedOption == "localflexible" && <LocalFlexibleForm />}
           {selectedOption == "outstation" && <OutStationForm />}
