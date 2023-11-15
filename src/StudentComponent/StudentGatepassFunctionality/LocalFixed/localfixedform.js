@@ -1,13 +1,13 @@
   import { useEffect, useState } from "react";
   import Localfixedlogic from "./localfixedlogic";
-  import { Display_date_time } from "./localfixedlogic";
+  import { Display_date_time, call_window_Screen } from "./localfixedlogic";
+  import G1_MessageModal from "../../../GlobalComponent/G1_MessageModal";
   import Cookies from "js-cookie";
 
   const LocalFixedForm = () => {
     const [date, setDate] = useState("");
     const [departureTime, setDepartureTime] = useState("");
     const [arrivalTime, setArrivalTime] = useState("");
-
     const accessToken = Cookies.get("ACCESS_TOKEN");
 
     useEffect(()=>{
@@ -22,8 +22,14 @@
           console.log(error);
         }
       };
+
       displaydata();
     },[])
+
+    const handle_apply_gatepass = () =>{
+      Localfixedlogic();
+      
+    }
 
     return (
       <div className="shadow-xl rounded-xl p-2 m-2 bg-red-100">
@@ -44,7 +50,7 @@
           </p>
         </div>
         <div>
-          <button className="bg-text-2 p-3 rounded-lg mt-5 text-white" onClick={()=>Localfixedlogic()}>
+          <button className="bg-text-2 p-3 rounded-lg mt-5 text-white" onClick={handle_apply_gatepass}>
             Apply Gatepass
           </button>
         </div>
