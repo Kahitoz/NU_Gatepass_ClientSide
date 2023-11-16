@@ -14,7 +14,7 @@ const S4_table = () => {
 
     async function fetchGatepassData() {
       try {
-        const authorization = userToken; // Replace with your own function to retrieve the authorization key from the cookie
+        const authorization = userToken;
         const headers = {
           Authorization: authorization,
           "Content-Type": "application/json",
@@ -34,6 +34,8 @@ const S4_table = () => {
     fetchGatepassData();
   }, []);
 
+  console.log(gatepassData);
+  
   function getActionText(status) {
     if (status === "CHECKEDIN" || status === "CHECKEDOUT") {
       return "N/A";
@@ -74,25 +76,19 @@ const S4_table = () => {
           {gatepassData.map((row, index) => (
             <div className={`${designs.d4}`} key={index}>
               <h1 className={`${designs.d5}`}>{row.gatepass_name}</h1>
-              <h1 className={`${designs.d5}`}>{moment(row.applied_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.applied_time).format("hh:mm")}</h1>
-              <h1 className={`${designs.d5}`}>{moment(row.from_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.from_time).format("hh:mm")}</h1>
-              <h1
-                className={clsx(
-                  `${designs.d5}`,
-                  getActionColor(row.status)
-                )}
-              >
+              <h1 className={`${designs.d5}`}>
+                {moment(row.applied_date).utc().format("YYYY-MM-DD")}
+                <br /> {moment(row.applied_time).format("HH:mm")}
+              </h1>
+              <h1 className={`${designs.d5}`}>
+                {moment(row.from_date).utc().format("YYYY-MM-DD")}
+                <br /> {moment(row.from_time, "HH:mm:ss").format("HH:mm")}
+              </h1>
+              <h1 className={clsx(`${designs.d5}`, getActionColor(row.status))}>
                 {row.status}
               </h1>
               <h1 className={`${designs.d5}`}>{row.comments}</h1>
-              <h1
-                className={
-                  `${designs.d5}`}
-                  
-                
-              >
-                {getActionText(row.status)}
-              </h1>
+              <h1 className={`${designs.d5}`}>{getActionText(row.status)}</h1>
             </div>
           ))}
         </div>
