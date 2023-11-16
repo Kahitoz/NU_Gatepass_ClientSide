@@ -66,8 +66,7 @@ export async function checkTime(accessToken) {
   const startTime = fetch_atime[1]["value"];
   const endTime = fetch_atime[2]["value"];
   const current_time = fetch_ctime.time;
-
-  console.log(startTime, endTime, current_time);
+  
   const parseTime = (timeString) => {
     const [hours, minutes, seconds] = timeString.split(":").map(Number);
     return new Date(0, 0, 0, hours, minutes, seconds);
@@ -101,9 +100,6 @@ export async function remaining_local_fixed(accessToken) {
 
   const lastMonday = get_data.lastMonday;
   const nextMonday = get_data.nextMonday;
-
-  console.log("this is last monday", lastMonday);
-
   const fetch_number = await fetch(
     combined_api_get_number + `${lastMonday}/` + `${nextMonday}`,
     {
@@ -137,7 +133,7 @@ export async function available_gatepass(accessToken) {
   }
 }
 
-//Method to check the status of already applied gatepass
+// Method to check the status of already applied gatepass
 export async function checkApprovedOrCheckedout(accessToken) {
   const route_1 =
     "/gatepass/v2/student/get_bool_student_checkedout_autoapproved/";
@@ -148,14 +144,28 @@ export async function checkApprovedOrCheckedout(accessToken) {
     },
   });
   const jsonResponse = await response.json();
-
   const get_number = jsonResponse.row_affected;
-  console.log("Current Gatepass:", get_number);
-  console.log("Type is:", typeof get_number);
-
   if (get_number > 0) {
     return true;
   } else {
     return false;
   }
+}
+
+// Method to check if the sudent has already applied for a gatepass today
+export async function todaysGatepassCheck(accessToken){
+    const route_1 = "/gatepass/v2/student/todaysGatepass"
+    const combined_get_todays_gatepass = api.concat(route_1);
+    const response = await fetch(combined_get_todays_gatepass,{
+        headers:{
+            Authorization:accessToken,
+        },
+    });
+    const jsonResponse = await response.json();
+    const get_number = jsonResponse.row_affected;
+    if(get_number>0){
+        return true;
+    }else{
+        return false;
+    }
 }
