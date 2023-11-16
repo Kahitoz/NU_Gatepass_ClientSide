@@ -3,7 +3,7 @@ import designs from "../StudentStyling/S3_WidgetsCSS";
 import Cookies from "js-cookie";
 import { week } from "../StudentGatepassHandler/S7_ParameterConfig";
 import { checkBlacklist } from "../StudentGatepassHandler/S1_LocalFixed";
-import {remaining_local_fixed} from "../../StudentComponent/StudentGatepassFunctionality/LocalFixed/localfixedlogic"
+import { remaining_local_fixed } from "../../StudentComponent/StudentGatepassFunctionality/LocalFixed/localfixedchecks";
 
 const S3_Widgets = () => {
   const [gatepassStatus, setGatepassStatus] = useState("");
@@ -28,10 +28,8 @@ const S3_Widgets = () => {
     };
 
     fetchData();
-    statusCheck()
-    fetchGatepassStatus()
-
-
+    statusCheck();
+    fetchGatepassStatus();
   }, [getWeekLimit]);
 
   const statusCheck = () => {
@@ -57,12 +55,12 @@ const S3_Widgets = () => {
       const accessToken = Cookies.get("ACCESS_TOKEN");
 
       const response = await fetch(
-          "http://127.0.0.1:4000/gatepass/v2/student/recent_gatepass",
-          {
-            headers: {
-              Authorization: `${accessToken}`,
-            },
-          }
+        "http://127.0.0.1:4000/gatepass/v2/student/recent_gatepass",
+        {
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        }
       );
 
       const data = await response.json();
@@ -77,25 +75,29 @@ const S3_Widgets = () => {
   };
 
   return (
-      <div className={`${designs.d1}`}>
-        <div className={`${designs.d2}`}>
-          <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-            <h1 className={`font-bold me-2`}>Local Fixed Gatepass Available:</h1>
-            <p className={`font-bold ${numberColor}`}>{getWeekLimit}</p>
-          </div>
-        </div>
-
-        <div className={designs.d2}>
-          <h1 className={`font-bold ${textColor}`}>{statusMessage}</h1>
-        </div>
-
-        <div className={`${designs.d2}`}>
-          <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-            <h1 className={`font-bold me-2`}>Last Gatepass Status:</h1>
-            <p className={`font-bold text-blue-700`}>{gatepassStatus}</p>
-          </div>
+    <div className={`${designs.d1}`}>
+      <div className={`${designs.d2}`}>
+        <div
+          className={`items-center justify-center text-center flex flex-col sm:flex-row`}
+        >
+          <h1 className={`font-bold me-2`}>Local Fixed Gatepass Available:</h1>
+          <p className={`font-bold ${numberColor}`}>{getWeekLimit}</p>
         </div>
       </div>
+
+      <div className={designs.d2}>
+        <h1 className={`font-bold ${textColor}`}>{statusMessage}</h1>
+      </div>
+
+      <div className={`${designs.d2}`}>
+        <div
+          className={`items-center justify-center text-center flex flex-col sm:flex-row`}
+        >
+          <h1 className={`font-bold me-2`}>Last Gatepass Status:</h1>
+          <p className={`font-bold text-blue-700`}>{gatepassStatus}</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
