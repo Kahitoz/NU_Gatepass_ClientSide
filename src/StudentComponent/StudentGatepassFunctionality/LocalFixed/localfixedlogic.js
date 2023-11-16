@@ -5,6 +5,7 @@ import {
   available_gatepass,
   checkTime,
   checkApprovedOrCheckedout,
+  todaysGatepassCheck,
 } from "./localfixedchecks";
 
 const api = Strings.api;
@@ -15,6 +16,7 @@ const fetchDataList = async (accessToken) => {
     const result_2 = await available_gatepass(accessToken);
     const result_3 = await checkTime(accessToken);
     const result_4 = await checkApprovedOrCheckedout(accessToken);
+    const result_5 = await todaysGatepassCheck(accessToken);
 
     console.log(result_1, result_2, result_3, result_4);
 
@@ -28,6 +30,8 @@ const fetchDataList = async (accessToken) => {
       );
     } else if (result_4 === true) {
       alert("There is one running gatepass");
+    } else if (result_5 === true) {
+      alert("You have already used 1 gate-pass today");
     } else {
       alert("Success: Local Fixed Gatepass applied ");
       apply_local_fixed(accessToken);
