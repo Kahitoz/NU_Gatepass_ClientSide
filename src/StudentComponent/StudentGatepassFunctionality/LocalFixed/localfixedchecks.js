@@ -76,6 +76,8 @@ export async function checkTime(accessToken) {
   const endDateTime = parseTime(endTime);
   const currentTime = parseTime(current_time);
 
+  console.log(startDateTime, endDateTime, currentTime)
+
   if (currentTime >= startDateTime && currentTime < endDateTime) {
     return true;
   } else {
