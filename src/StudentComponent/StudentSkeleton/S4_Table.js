@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import designs from "../StudentStyling/S4_TableCSS";
 import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
 import clsx from "clsx";
 import moment from "moment";
 
@@ -10,7 +9,6 @@ const S4_table = () => {
 
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
-    const decoded = jwt_decode(userToken);
 
     async function fetchGatepassData() {
       try {
@@ -34,10 +32,47 @@ const S4_table = () => {
     fetchGatepassData();
   }, []);
 
-  console.log(gatepassData);
-  
+  const cancelGatepass = async (id, status) => {
+    const userToken = Cookies.get("ACCESS_TOKEN");
+
+    if (
+      status === "Pending" ||
+      status === "CHECKEDOUT" ||
+      status === "CHECKEDIN" ||
+      status === "Cancelled"
+    ) {
+    } else {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:4000/gatepass/v2/student/gatepass_cancel",
+          {
+            method: "POST",
+            headers: {
+              Authorization: userToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          }
+        );
+        if (response.ok) {
+          alert("Gatepass Cancelled");
+          window.location.reload();
+        } else {
+          const data = await response.json();
+          alert(data);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
   function getActionText(status) {
-    if (status === "CHECKEDIN" || status === "CHECKEDOUT") {
+    if (
+      status === "CHECKEDIN" ||
+      status === "CHECKEDOUT" ||
+      status === "Cancelled"
+    ) {
       return "N/A";
     }
     return "Cancel";
@@ -88,7 +123,12 @@ const S4_table = () => {
                 {row.status}
               </h1>
               <h1 className={`${designs.d5}`}>{row.comments}</h1>
-              <h1 className={`${designs.d5}`}>{getActionText(row.status)}</h1>
+              <h1
+                className={`${designs.d5} cursor-pointer`}
+                onClick={() => cancelGatepass(row.request_id, row.status)}
+              >
+                {getActionText(row.status)}
+              </h1>
             </div>
           ))}
         </div>
