@@ -24,7 +24,7 @@ const fetchDataList = async (accessToken) => {
       alert("Gatepass Blocked");
     } else if (result_2 === false) {
       alert("Limit Exceeded");
-    } else if (result_3 === true) {
+    } else if (result_3 === false) {
       alert(
         "You cannot apply outside the time range and also 1 hr before the end time"
       );
@@ -34,7 +34,7 @@ const fetchDataList = async (accessToken) => {
       alert("You have already used 1 gate-pass today");
     } else {
       alert("Success: Local Fixed Gatepass applied ");
-      apply_local_fixed(accessToken);
+          apply_local_fixed(accessToken);
     }
   } catch (error) {
     console.error(error);
