@@ -1,7 +1,7 @@
 
 const S5_ProfileCSS = {
-    "d1":"bg-Items_bg border border-black ms-2 me-2 rounded-lg p-4",
-    "d2":"p-2 flex justify-center align-center ms-2 me-2 rounded-lg",
+    "d1":"bg-Items_bg border border-black ms-2 rounded-lg p-4",
+    "d2":"p-2 flex justify-center align-center ms-2 rounded-lg",
     "d3":"inline-block",
     "d4":"flex bg-background p-6 rounded-lg flex-col sm:flex-row mb-6 shadow-xl",
     "d5":"mr-8 ms-8",
