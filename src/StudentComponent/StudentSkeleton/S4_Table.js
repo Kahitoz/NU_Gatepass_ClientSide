@@ -93,6 +93,10 @@ const S4_table = () => {
     }
   }
 
+  function trimTime(time) {
+    return time.slice(11, -5);
+  }
+
   return (
     <div className="bg-background">
       <div>
@@ -113,11 +117,11 @@ const S4_table = () => {
               <h1 className={`${designs.d5}`}>{row.gatepass_name}</h1>
               <h1 className={`${designs.d5}`}>
                 {moment(row.applied_date).utc().format("YYYY-MM-DD")}
-                <br /> {moment(row.applied_time).format("HH:mm")}
+                <br /> {trimTime(row.applied_time)}
               </h1>
               <h1 className={`${designs.d5}`}>
                 {moment(row.from_date).utc().format("YYYY-MM-DD")}
-                <br /> {moment(row.from_time, "HH:mm:ss").format("HH:mm")}
+                <br /> {trimTime(row.from_time)}
               </h1>
               <h1 className={clsx(`${designs.d5}`, getActionColor(row.status))}>
                 {row.status}
