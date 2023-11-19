@@ -86,7 +86,7 @@ const S4_table = () => {
         return "text-yellow-500";
       case "Pending":
         return "text-green-500";
-      case "cancelled":
+      case "Cancelled":
         return "text-red-500";
       default:
         return "text-blue-500";
