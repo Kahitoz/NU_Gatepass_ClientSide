@@ -18,8 +18,6 @@ const fetchDataList = async (accessToken) => {
     const result_4 = await checkApprovedOrCheckedout(accessToken);
     const result_5 = await todaysGatepassCheck(accessToken);
 
-    console.log(result_1, result_2, result_3, result_4);
-
     if (result_1 === true) {
       alert("Gatepass Blocked");
     } else if (result_2 === false) {
