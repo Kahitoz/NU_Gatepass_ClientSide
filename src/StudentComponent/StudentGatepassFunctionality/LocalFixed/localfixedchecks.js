@@ -25,8 +25,6 @@ export async function Display_date_time(accessToken) {
   const get_date_time = await fetch_date_time.json();
   const get_date = get_date_time.date;
 
-  console.log(get_date);
-
   return { get_date, startTime, endTime };
 }
 
@@ -66,7 +64,7 @@ export async function checkTime(accessToken) {
   const startTime = fetch_atime[1]["value"];
   const endTime = fetch_atime[2]["value"];
   const current_time = fetch_ctime.time;
-  
+
   const parseTime = (timeString) => {
     const [hours, minutes, seconds] = timeString.split(":").map(Number);
     return new Date(0, 0, 0, hours, minutes, seconds);
@@ -76,7 +74,7 @@ export async function checkTime(accessToken) {
   const endDateTime = parseTime(endTime);
   const currentTime = parseTime(current_time);
 
-  console.log(startDateTime, endDateTime, currentTime)
+  console.log(startDateTime, endDateTime, currentTime);
 
   if (currentTime >= startDateTime && currentTime < endDateTime) {
     return true;
@@ -155,19 +153,19 @@ export async function checkApprovedOrCheckedout(accessToken) {
 }
 
 // Method to check if the sudent has already applied for a gatepass today
-export async function todaysGatepassCheck(accessToken){
-    const route_1 = "/gatepass/v2/student/todaysGatepass"
-    const combined_get_todays_gatepass = api.concat(route_1);
-    const response = await fetch(combined_get_todays_gatepass,{
-        headers:{
-            Authorization:accessToken,
-        },
-    });
-    const jsonResponse = await response.json();
-    const get_number = jsonResponse.row_affected;
-    if(get_number>0){
-        return true;
-    }else{
-        return false;
-    }
+export async function todaysGatepassCheck(accessToken) {
+  const route_1 = "/gatepass/v2/student/todaysGatepass";
+  const combined_get_todays_gatepass = api.concat(route_1);
+  const response = await fetch(combined_get_todays_gatepass, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+  const jsonResponse = await response.json();
+  const get_number = jsonResponse.row_affected;
+  if (get_number > 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
