@@ -13,20 +13,84 @@ export async function Get_Date(accessToken) {
 
   const get_date_time = await fetch_date_time.json();
   const date = get_date_time.date;
-  return date;
+  const time = get_date_time.time;
+  return { date: date, time: time };
 }
 
-export async function GetLowerBoundTime(accessToken){
-    const route_2 = "/gatepass/v2/admin/parameter_config"
-    const combined_get_value = api_head.concat(route_2);
-    const fetch_allowed_time = await fetch(combined_get_value, {
-        headers: {
-          Authorization: accessToken,
-        },
-      });
-      const fetch_atime = await fetch_allowed_time.json();
+export async function GetLowerBoundTime(accessToken) {
+  const route_1 = "/gatepass/v2/admin/parameter_config";
+  const combined_get_value = api_head.concat(route_1);
+  const fetch_allowed_time = await fetch(combined_get_value, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+  const fetch_atime = await fetch_allowed_time.json();
 
-      const end_time = fetch_atime[2]['value']
-      const lb_time = fetch_atime[4]["value"];
-      return {"one":lb_time, "two":end_time};
+  const end_time = fetch_atime[2]["value"];
+  const lb_time = fetch_atime[4]["value"];
+  const ub_time = fetch_atime[3]["value"];
+  const b_time = fetch_atime[8]["value"];
+  return { one: lb_time, two: end_time, three: ub_time, four: b_time };
+}
+
+export async function GetWardenDetails(access_token) {
+  const route_1 = "/gatepass/v2/student/get_warden_details";
+  const combined_get_warden_details = api_head.concat(route_1);
+
+  const get_warden_details = await fetch(combined_get_warden_details, {
+    headers: {
+      Authorization: access_token,
+    },
+  });
+  const result = await get_warden_details.json();
+  const name = result.warden_name;
+  const uid = result.alloted_warden;
+
+  return { one: uid, two: name };
+}
+
+export async function CheckBlackList(access_token) {
+  const route = "/gatepass/v2/student/blacklisted/";
+  const combined_api = api_head.concat(route);
+  const response = await fetch(combined_api, {
+    headers: {
+      Authorization: access_token,
+    },
+  });
+  const get_response = await response.json();
+  const get_result = get_response.blacklisted;
+  if (get_result == true) {
+    alert("Your Gatepass is Blocked");
+    return true;
+  } else {
+    return get_result;
+  }
+}
+
+export async function CheckGatepassStatus(access_token) {
+  const route = "/gatepass/v2/student/get_gatepass_status_for_localflexible";
+  const combined_get_status = api_head.concat(route);
+  const get_result = await fetch(combined_get_status, {
+    headers: {
+      Authorization: access_token,
+    },
+  });
+  const check_result = await get_result.json();
+  if (
+    check_result.recordset[0] !== undefined &&
+    check_result.recordset[0] !== null
+  ) {
+    if (
+      check_result.recordset[0].status === "Approved" ||
+      check_result.recordset[0].status === "CHECKEDOUT" ||
+      check_result.recordset[0].status === "Pending"
+    ) {
+      alert("There is one running gatepass");
+      return true;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }
