@@ -36,7 +36,6 @@ const S4_table = () => {
     const userToken = Cookies.get("ACCESS_TOKEN");
 
     if (
-      status === "Pending" ||
       status === "CHECKEDOUT" ||
       status === "CHECKEDIN" ||
       status === "Cancelled"
