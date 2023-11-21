@@ -13,7 +13,6 @@ const LocalFixedForm = () => {
     const displaydata = async () => {
       try {
         const data = await Display_date_time(accessToken);
-        console.log("this is data", data);
         setDate(data.get_date);
         setDepartureTime(data.startTime);
         setArrivalTime(data.endTime);
@@ -36,7 +35,7 @@ const LocalFixedForm = () => {
         <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">{date}</p>
       </div>
       <div>
-        <p className="font-bold p-2">Departure Date</p>
+        <p className="font-bold p-2">Departure Time</p>
         <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
           {departureTime}
         </p>

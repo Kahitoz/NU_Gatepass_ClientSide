@@ -32,18 +32,18 @@ const StudentNavbar = () => {
                   {Strings.list_1}
                 </li>
               </Link>
-              <Link to="/student/gatepass">
+              {/* <Link to="/student/gatepass">
                 <li
                   className={`${designs.Navbar["d-7"]} hover:cursor-pointer hover:text-Navbar_bg`}
                 >
                   {Strings.list_2}
                 </li>
-              </Link>
+              </Link> */}
               <Link to="/student/newgatepass">
                 <li
                   className={`${designs.Navbar["d-7"]} hover:cursor-pointer hover:text-Navbar_bg`}
                 >
-                  NewGatepass
+                  Gatepass
                 </li>
               </Link>
             </ul>
