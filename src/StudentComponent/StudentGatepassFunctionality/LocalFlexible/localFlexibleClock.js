@@ -1,16 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Get_Date } from "./localflexiblecheck";
+import { GetLowerBoundTime, Get_Date } from "./localflexiblecheck";
 import Cookies from "js-cookie";
+
+export function timeAdder(one, two){
+  const sum = one+two;
+  if(sum>23){
+    return 24-sum;
+  }
+  else{
+    return sum;
+  }
+}
 
 const CustomClockPicker = ({ onTimeChange }) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [startH, setStartH] = useState(0);
+  const [endH, setEndH] = useState(0);
 
   const access_token = Cookies.get("ACCESS_TOKEN");
   useEffect(() => {
     const real_time = async (access_token) => {
       const data = await Get_Date(access_token);
+      const cData = await GetLowerBoundTime(access_token);
+
+      const ub_time = cData.three;
+      const ub_hr = ub_time.slice(0,3);
+      const int_ub_hr = parseInt(ub_hr, 10)-1;
+
+      const bufferTime = cData.four;
+      const intbufferTime = parseInt(bufferTime);
+
+     
+      setEndH(int_ub_hr);
+
       const time = data.time;
 
       const hr = time.slice(0, 3);
@@ -19,11 +42,15 @@ const CustomClockPicker = ({ onTimeChange }) => {
       const minute = time.slice(3, 6);
       const intmin = parseInt(minute, 10);
 
-      setStartH(inthr);
+      const startTime = timeAdder(inthr, intbufferTime);
+
+      setStartH(startTime);
+      setHours(startTime)
       setMinutes(intmin);
     };
     real_time(access_token);
   }, []);
+
 
   const hrsOnChange = (e) => {
     const newHours = e.target.value;
@@ -41,7 +68,7 @@ const CustomClockPicker = ({ onTimeChange }) => {
     });
   };
 
-   const hourPicker = (start = startH, end = 23, step = 1) => {
+   const hourPicker = (start = startH, end = endH, step = 1) => {
     const hour = [];
     for (let i = start; i <= end; i = i + step) {
       const formattedValue = i.toString().padStart(2, "0");
