@@ -13,7 +13,6 @@ const LocalFixedForm = () => {
     const displaydata = async () => {
       try {
         const data = await Display_date_time(accessToken);
-        console.log("this is data", data);
         setDate(data.get_date);
         setDepartureTime(data.startTime);
         setArrivalTime(data.endTime);
