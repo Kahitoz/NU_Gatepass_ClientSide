@@ -94,3 +94,26 @@ export async function CheckGatepassStatus(access_token) {
     return false;
   }
 }
+
+export async function CheckTimeLocalFlexible(access_token, currentTime) {
+  const timeData = await GetLowerBoundTime(access_token);
+  const start_time = timeData.one;
+  const end_time = timeData.two;
+
+  const getStartHr = start_time.slice(0, 3);
+  const getEndHr = end_time.slice(0, 3);
+
+  const getcurrentHr = currentTime.slice(0, 3);
+
+  const intStartHr = parseInt(getStartHr, 10);
+  const intEndHr = parseInt(getEndHr, 10);
+
+  const intcurrentHr = parseInt(getcurrentHr, 10);
+
+  if (intcurrentHr > intStartHr && intcurrentHr < intEndHr) {
+    return false;
+  } else {
+    alert("Time selected is not valid");
+    return true;
+  }
+}
