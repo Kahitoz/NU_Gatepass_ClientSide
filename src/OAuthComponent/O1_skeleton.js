@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import Logo from "../StudentComponent/icons/icon-niit.png";
 import FailedToFetchScreen from "../InfoComponent/I1_FailedToFetchScreen";
-
+import env_variables from "../env_variables.js";
 const O1_skeleton = () => {
   const [user, setUser] = useState({});
   const [role, setRole] = useState({});
@@ -47,11 +47,12 @@ const O1_skeleton = () => {
       setError(error);
     }
   }
-  const client_id = process.env.REACT_APP_CLIENT_ID;
+  const {Client_id} = env_variables;
+  console.log(` client id is ${Client_id}`)
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id: client_id,
+      client_id: Client_id,
       callback: handleCallbackResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
