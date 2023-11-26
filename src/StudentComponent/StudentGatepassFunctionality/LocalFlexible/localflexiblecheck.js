@@ -50,6 +50,28 @@ export async function GetWardenDetails(access_token) {
   return { one: uid, two: name };
 }
 
+export async function GetCurrentTime(access_token) {
+  const route = "/gatepass/v2/student/time";
+  const combined_time_api = api_head.concat(route);
+  const fetch_time = await fetch(combined_time_api, {
+    headers: {
+      Authorization: access_token,
+    },
+  });
+  const get_time = await fetch_time.json();
+  const result = get_time.time;
+  const hr = result.slice(0, 3);
+  const min = result.slice(3, 5);
+  const inthr = parseInt(hr, 10);
+  const get_buffer_time = await GetLowerBoundTime(access_token);
+  const buffer = get_buffer_time.four;
+  const intbuffer = parseInt(buffer);
+  const new_time = intbuffer + inthr;
+  const str_time = String(new_time);
+  const concat_time = str_time + ":" + min + ":" + "00";
+  return concat_time;
+}
+
 export async function CheckBlackList(access_token) {
   const route = "/gatepass/v2/student/blacklisted/";
   const combined_api = api_head.concat(route);
@@ -60,7 +82,7 @@ export async function CheckBlackList(access_token) {
   });
   const get_response = await response.json();
   const get_result = get_response.blacklisted;
-  if (get_result == true) {
+  if (get_result === true) {
     alert("Your Gatepass is Blocked");
     return true;
   } else {
