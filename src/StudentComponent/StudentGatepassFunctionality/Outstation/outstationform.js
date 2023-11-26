@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import CustomClockPicker from "./outstationclock";
+import { GetWarden } from "./outstationcheck";
+import Cookies from "js-cookie";
 
 const OutStationForm = () => {
   const [departureDate, setDepartureDate] = useState("");
@@ -12,6 +14,17 @@ const OutStationForm = () => {
   const [destination, setDestination] = useState("Set Destination Address");
   const [contact, setContact] = useState();
   const [warden, setWarden] = useState("Shail Dean");
+
+  const access_token = Cookies.get('ACCESS_TOKEN')
+  useEffect(()=>{
+    const getFields = async(access_token) =>{
+      const get_warden_details = await GetWarden(access_token);
+      const warden_name = get_warden_details.two;
+      setWarden(warden_name);
+    }
+
+    getFields(access_token);
+},[])
 
   const handleReasonChange = (e) => {
     setReason(e.target.value);
@@ -47,7 +60,7 @@ const OutStationForm = () => {
     const dTime = fHr + ":" + fMm + ":" + fSs;
     setArrivalTime(dTime);
   };
-
+  console.log(departureTime,arrivalTime)
   return (
     <div className="shadow-xl rounded-xl p-2 m-2 bg-red-100">
       <div>
@@ -65,6 +78,7 @@ const OutStationForm = () => {
         <div>
           <CustomClockPicker onTimeChange={departureTimeHandler} />
         </div>
+        <p>Selected time by default is - {departureTime}</p>
       </div>
       <div>
         <p className="font-bold p-2">Arrival Date</p>
@@ -79,8 +93,9 @@ const OutStationForm = () => {
       <div>
         <p className="font-bold p-2">Arrival Time</p>
         <div>
-          <CustomClockPicker onTimeChange={arrivalTimeHandler} />
+          <CustomClockPicker onTimeChange={arrivalTimeHandler}/>
         </div>
+        <p>Selected time by default is - {arrivalTime}</p>
       </div>
       <div>
         <p className="font-bold p-2">Destination</p>
