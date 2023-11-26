@@ -1,10 +1,13 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import CustomClockPicker from "./outstationclock";
 
 const OutStationForm = () => {
-  const [departureDate, setDepartureDate] = useState("13/11/2023");
-  const [arrivalDate, setArrivalDate] = useState("15/11/23");
-  const [departureTime, setDepartureTime] = useState("12:00:00");
-  const [arrivalTime, setArrivalTime] = useState("5:00:00");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
   const [reason, setReason] = useState("");
   const [destination, setDestination] = useState("Set Destination Address");
   const [contact, setContact] = useState();
@@ -22,31 +25,62 @@ const OutStationForm = () => {
     setContact(e.target.value);
   };
 
+  const handleDateChange = (date) => {
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    return formattedDate;
+  };
+
+  const departureTimeHandler = (selectedTime) => {
+    const fHr = String(selectedTime.hours);
+    const fMm = selectedTime.minutes;
+    const fSs = "00";
+
+    const dTime = fHr + ":" + fMm + ":" + fSs;
+    setDepartureTime(dTime);
+  };
+
+  const arrivalTimeHandler = (selectedTime) => {
+    const fHr = String(selectedTime.hours);
+    const fMm = selectedTime.minutes;
+    const fSs = "00";
+
+    const dTime = fHr + ":" + fMm + ":" + fSs;
+    setArrivalTime(dTime);
+  };
+
   return (
     <div className="shadow-xl rounded-xl p-2 m-2 bg-red-100">
       <div>
         <p className="font-bold p-2">Departure Date</p>
-        <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
-          {departureDate}
-        </p>
+        <div className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
+          <p>{departureDate}</p>
+          <DatePicker
+            onChange={(date) => setDepartureDate(handleDateChange(date))}
+            dateFormat={`yyyy-MM-dd`}
+          />
+        </div>
       </div>
       <div>
         <p className="font-bold p-2">Departure Time</p>
-        <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
-          {departureTime}
-        </p>
+        <div>
+          <CustomClockPicker onTimeChange={departureTimeHandler} />
+        </div>
       </div>
       <div>
         <p className="font-bold p-2">Arrival Date</p>
-        <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
-          {arrivalDate}
-        </p>
+        <div className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
+          <p>{arrivalDate}</p>
+          <DatePicker
+            onChange={(date) => setArrivalDate(handleDateChange(date))}
+            dateFormat={`yyyy-MM-dd`}
+          />
+        </div>
       </div>
       <div>
         <p className="font-bold p-2">Arrival Time</p>
-        <p className="bg-gray-200 text-gray-700 p-2 rounded-xl ">
-          {arrivalTime}
-        </p>
+        <div>
+          <CustomClockPicker onTimeChange={arrivalTimeHandler} />
+        </div>
       </div>
       <div>
         <p className="font-bold p-2">Destination</p>
