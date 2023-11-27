@@ -47,7 +47,7 @@ const O1_skeleton = () => {
       setError(error);
     }
   }
-  const client_id = process.env.REACT_APP_CLIENT_ID;
+  const client_id = "372946592599-u1gj83quodhpdae46ejslj4tto3mn3vn.apps.googleusercontent.com";
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({

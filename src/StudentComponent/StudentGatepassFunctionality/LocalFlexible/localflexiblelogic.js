@@ -1,5 +1,5 @@
 import Strings from "../../StudentsScreen/Strings.json";
-import { CheckBlackList, CheckGatepassStatus } from "./localflexiblecheck";
+import { CheckBlackList, CheckGatepassStatus, CheckTimeLocalFlexible } from "./localflexiblecheck";
 
 const head_api = Strings.api;
 
@@ -14,8 +14,9 @@ export async function finalCheck(
 ) {
   const result_1 = await CheckBlackList(access_token);
   const result_2 = await CheckGatepassStatus(access_token);
+  const result_3 = await CheckTimeLocalFlexible(access_token, departureTime);
 
-  if (result_1 === false && result_2 === false) {
+  if (result_1 === false && result_2 === false && result_3 === false) {
     alert("Gatepass Requested Successfully");
     apply_local_flexible_gatepass( access_token,
         departureTime,
@@ -56,9 +57,9 @@ async function apply_local_flexible_gatepass(
       approval_to: wardenUID,
     }),
   })
-    .then((Response) => console.log(Response.json()))
-    .then((response) => console.log(response))
-    .then((error) => console.log(error));
+    .then((Response) => (Response.json()))
+    .then((response) => (response))
+    .then((error) => (error));
 
   return apply;
 }

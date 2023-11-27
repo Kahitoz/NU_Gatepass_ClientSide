@@ -3,13 +3,12 @@ import {
   Get_Date,
   GetLowerBoundTime,
   GetWardenDetails,
+  GetCurrentTime,
   CheckGatepassStatus,
 } from "./localflexiblecheck";
 import { finalCheck } from "./localflexiblelogic";
-import { hourPicker } from "./localFlexibleClock";
 import CustomClockPicker from "./localFlexibleClock";
 import Cookies from "js-cookie";
-import { async } from "q";
 
 const LocalFlexibleForm = () => {
   const [date, setDate] = useState("");
@@ -18,7 +17,6 @@ const LocalFlexibleForm = () => {
   const [reason, setReason] = useState("");
   const [warden, setWarden] = useState("");
   const [uid, setUid] = useState("");
-  const [stime, setStime] = useState("");
 
   const accessToken = Cookies.get("ACCESS_TOKEN");
 
@@ -36,9 +34,7 @@ const LocalFlexibleForm = () => {
 
     const get_lbValue = async (accessToken) => {
       const get_values = await GetLowerBoundTime(accessToken);
-      const lb_time = get_values.one;
       const end_time = get_values.two;
-      setStime(lb_time);
       setArrivalTime(end_time);
     };
 
@@ -49,8 +45,14 @@ const LocalFlexibleForm = () => {
       setUid(uid);
       setWarden(name);
     };
+
+    const get_current_time = async(accessToken) =>{
+      const time = await GetCurrentTime(accessToken);
+      setDepartureTime(time);
+    }
     get_Date(accessToken);
     get_lbValue(accessToken);
+    get_current_time(accessToken);
     get_warden_details(accessToken);
   }, []);
 
