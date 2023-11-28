@@ -154,4 +154,3 @@ export async function CheckOutstation(access_token) {
     return false;
   }
 }
-

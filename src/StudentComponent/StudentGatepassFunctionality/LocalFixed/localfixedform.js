@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Localfixedlogic from "./localfixedlogic";
 import { Display_date_time } from "./localfixedchecks";
 import Cookies from "js-cookie";
+import { return_true, Get_dates } from "../GatepassDropDownHandler";
 
 const LocalFixedForm = () => {
   const [date, setDate] = useState("");
@@ -13,9 +14,20 @@ const LocalFixedForm = () => {
     const displaydata = async () => {
       try {
         const data = await Display_date_time(accessToken);
+        const data_1 = await return_true(accessToken);
+        const data_2 = await Get_dates(accessToken);
+
+        const start_time = data_2.start_time.concat(':00');
+        const end_time = data_2.end_time.concat(':00');
+
+        if (data_1 === true) {
+          setDepartureTime(start_time);
+          setArrivalTime(end_time);
+        } else {
+          setDepartureTime(data.startTime);
+          setArrivalTime(data.endTime);
+        }
         setDate(data.get_date);
-        setDepartureTime(data.startTime);
-        setArrivalTime(data.endTime);
       } catch (error) {
         console.log(error);
       }
