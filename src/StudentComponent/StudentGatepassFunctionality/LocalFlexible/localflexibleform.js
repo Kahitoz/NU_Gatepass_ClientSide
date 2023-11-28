@@ -101,8 +101,7 @@ const LocalFlexibleForm = () => {
         </div>
         <div>
           <p>
-            This is selected departureTime - {departureTime} -if it is not
-            correct try changing the time from above
+            This is selected departureTime - {departureTime}
           </p>
         </div>
       </div>
