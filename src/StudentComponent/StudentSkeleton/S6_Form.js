@@ -15,7 +15,6 @@ const S6_FormDesigns = ({
                           wardenVisible,
                           departureTime,
                           arrivalTime,
-                          wMessage,
                           handleOptionSelect,
                           handleWselect,
                           handlewDropDown,
@@ -98,7 +97,6 @@ const S6_FormDesigns = ({
                 )}
                 <option value="Outstation">Outstation</option>
                 <option value="Emergency">Emergency</option>
-                <option value="Non Returnable">Non Returnable</option>
               </select>
             </div>
 
@@ -235,13 +233,6 @@ const S6_FormDesigns = ({
                 </div>
               </>
             )}
-              {wMessage &&(
-                  <div>
-                      <p>
-                          Non-returnable gatepass will already be accepted, if you are leaving the campus forever and you have no dues remaining
-                      </p>
-                  </div>
-              )}
             <button
               className="bg-text-2 p-3 rounded-lg mt-5 text-white"
               onClick={(event) => handleClick(event)}

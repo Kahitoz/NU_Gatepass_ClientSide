@@ -8,7 +8,7 @@ import { handle_submit_local_flexible } from "./S2_LocalFelxible";
 import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
 import moment, {max} from 'moment'
-import G1_MessageModal from "../../GlobalComponent/G1_MessageModal";
+import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
 import {check_todays_gatepass} from "./S0_CommonChecks";
 import {check_valid_day} from "./S8_AutoApprovalCheck";
 import {departure_time} from "./S8_AutoApprovalCheck";
@@ -25,7 +25,6 @@ const S6_FormFunctionality = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
-  const [wMessageVisible, setWMessageVisible] = useState(false);
   const [departureTime, setDepartureTime] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -146,7 +145,6 @@ const S6_FormFunctionality = () => {
     setDestinationVisible(false);
     setReasonVisible(false);
     setWardenVisible(false);
-    setWMessageVisible(false)
 
     if (option === "Local Flexible") {
       setReasonVisible(true);
@@ -159,14 +157,6 @@ const S6_FormFunctionality = () => {
       setDestinationVisible(true);
       setReasonVisible(true);
       setWardenVisible(true);
-    }else if(option === 'Non Returnable'){
-      setDestinationVisible(true)
-      setDepartureDateVisible(true);
-      setDepartureTimeVisible(false);
-      setArrivalDateVisible(false);
-      setArrivalTimeVisible(false);
-      setWardenVisible(true)
-      setWMessageVisible(true)
     }
   };
 
@@ -209,7 +199,6 @@ const S6_FormFunctionality = () => {
             wardenVisible={wardenVisible}
             departureTime={departureTime}
             arrivalTime={arrivalTime}
-            wMessage = {wMessageVisible}
             handleOptionSelect={handleOptionSelect}
             handleWselect={handleWselect}
             handlewDropDown={handlewDropDown}

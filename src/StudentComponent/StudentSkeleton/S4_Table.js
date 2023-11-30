@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import designs from "../StudentStyling/S4_TableCSS";
 import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 import clsx from "clsx";
 import moment from "moment";
 
@@ -9,10 +10,11 @@ const S4_table = () => {
 
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
+    const decoded = jwt_decode(userToken);
 
     async function fetchGatepassData() {
       try {
-        const authorization = userToken;
+        const authorization = userToken; // Replace with your own function to retrieve the authorization key from the cookie
         const headers = {
           Authorization: authorization,
           "Content-Type": "application/json",
@@ -32,46 +34,8 @@ const S4_table = () => {
     fetchGatepassData();
   }, []);
 
-  const cancelGatepass = async (id, status) => {
-    const userToken = Cookies.get("ACCESS_TOKEN");
-
-    if (
-      status === "CHECKEDOUT" ||
-      status === "CHECKEDIN" ||
-      status === "Cancelled"
-    ) {
-    } else {
-      try {
-        const response = await fetch(
-          "http://127.0.0.1:4000/gatepass/v2/student/gatepass_cancel",
-          {
-            method: "POST",
-            headers: {
-              Authorization: userToken,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id }),
-          }
-        );
-        if (response.ok) {
-          alert("Gatepass Cancelled");
-          window.location.reload();
-        } else {
-          const data = await response.json();
-          alert(data);
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-  };
-
   function getActionText(status) {
-    if (
-      status === "CHECKEDIN" ||
-      status === "CHECKEDOUT" ||
-      status === "Cancelled"
-    ) {
+    if (status === "CHECKEDIN" || status === "CHECKEDOUT") {
       return "N/A";
     }
     return "Cancel";
@@ -85,15 +49,11 @@ const S4_table = () => {
         return "text-yellow-500";
       case "Pending":
         return "text-green-500";
-      case "Cancelled":
+      case "cancelled":
         return "text-red-500";
       default:
         return "text-blue-500";
     }
-  }
-
-  function trimTime(time) {
-    return time.slice(11, -5);
   }
 
   return (
@@ -114,21 +74,22 @@ const S4_table = () => {
           {gatepassData.map((row, index) => (
             <div className={`${designs.d4}`} key={index}>
               <h1 className={`${designs.d5}`}>{row.gatepass_name}</h1>
-              <h1 className={`${designs.d5}`}>
-                {moment(row.applied_date).utc().format("YYYY-MM-DD")}
-                <br /> {trimTime(row.applied_time)}
-              </h1>
-              <h1 className={`${designs.d5}`}>
-                {moment(row.from_date).utc().format("YYYY-MM-DD")}
-                <br /> {trimTime(row.from_time)}
-              </h1>
-              <h1 className={clsx(`${designs.d5}`, getActionColor(row.status))}>
+              <h1 className={`${designs.d5}`}>{moment(row.applied_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.applied_time).format("hh:mm")}</h1>
+              <h1 className={`${designs.d5}`}>{moment(row.from_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.from_time).format("hh:mm")}</h1>
+              <h1
+                className={clsx(
+                  `${designs.d5}`,
+                  getActionColor(row.status)
+                )}
+              >
                 {row.status}
               </h1>
               <h1 className={`${designs.d5}`}>{row.comments}</h1>
               <h1
-                className={`${designs.d5} cursor-pointer`}
-                onClick={() => cancelGatepass(row.request_id, row.status)}
+                className={
+                  `${designs.d5}`}
+                  
+                
               >
                 {getActionText(row.status)}
               </h1>
