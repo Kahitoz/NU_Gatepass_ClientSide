@@ -48,7 +48,7 @@ const EmergencyForm = () => {
       setDepartureDate(date);
     };
     get_values(access_token);
-  });
+  },[]);
 
   const handleDestinationChange = (e) => {
     setDestination(e.target.value);
