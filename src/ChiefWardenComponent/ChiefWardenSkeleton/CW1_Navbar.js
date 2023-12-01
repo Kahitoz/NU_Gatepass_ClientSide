@@ -5,7 +5,10 @@ import Strings from "../ChiefWardenScreens/Strings.json";
 import designs from "../ChiefWardenStyling/CW1_NavbarCSS";
 import { Link } from "react-router-dom";
 const ChiefWardenNavbar = () => {
-
+function clearCookies() {
+    document.cookie =
+      "ACCESS_TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
   return (
     <div>
       <div>
@@ -33,7 +36,7 @@ const ChiefWardenNavbar = () => {
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
               </Link>
             </ul>
-            <Link to="/">
+            <Link to="/" onClick={() => clearCookies()}>
             <img
               src={Logout}
               alt={`${Strings["alt-1"]}`}
