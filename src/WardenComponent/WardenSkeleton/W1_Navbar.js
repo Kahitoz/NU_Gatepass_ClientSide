@@ -4,7 +4,11 @@ import Logout from "../icons/icon-logout.png";
 import Strings from "../WardenScreens/Strings.json";
 import designs from "../WardenStyling/W1_NavbarCSS";
 import { Link } from "react-router-dom";
-const StudentNavbar = () => {
+const WardenNavbar = () => {
+  function clearCookies() {
+    document.cookie =
+      "ACCESS_TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
 
   return (
     <div>
@@ -33,7 +37,7 @@ const StudentNavbar = () => {
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
               </Link>
             </ul>
-            <Link to="/">
+            <Link to="/" onClick={()=>{clearCookies()}}>
             <img
               src={Logout}
               alt={`${Strings["alt-1"]}`}
@@ -47,4 +51,4 @@ const StudentNavbar = () => {
   );
 };
 
-export default StudentNavbar;
+export default WardenNavbar;
