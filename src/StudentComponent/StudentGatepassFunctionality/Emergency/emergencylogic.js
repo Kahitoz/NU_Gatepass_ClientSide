@@ -42,7 +42,6 @@ async function emergency_gatepass(
     reason,
     contact,
     destination,
-    warden_uid,
     visit
   ) {
     let sending_data = fetch(
@@ -64,7 +63,7 @@ async function emergency_gatepass(
           destination: destination,
           destination_contact: contact,
           visit_to: visit,
-          approval_to: warden_uid,
+          approval_to: '7000',
         }),
       }
     )
