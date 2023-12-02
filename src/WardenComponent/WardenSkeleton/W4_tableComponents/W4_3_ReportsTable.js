@@ -33,6 +33,7 @@ const W4_3_ReportTable = ({data}) => {
 
   return (
     <div>
+      {TbData.length>0 && <div>
       {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
       <div>
         <div className={`${designs.d1}`}>
@@ -40,7 +41,9 @@ const W4_3_ReportTable = ({data}) => {
             <h1 className={`${designs.d5}`}>Enrollment</h1>
             <h1 className={`${designs.d5}`}>Applied Date</h1>
             <h1 className={`${designs.d5}`}>Applied Time</h1>
-            <h1 className={`${designs.d5}`}>Actions</h1>
+            <h1 className={`${designs.d5}`}>Destination</h1>
+            <h1 className={`${designs.d5}`}>Status</h1>
+            {/* <h1 className={`${designs.d5}`}>Actions</h1> */}
           </div>
         </div>
 
@@ -58,8 +61,9 @@ const W4_3_ReportTable = ({data}) => {
                 <h1 className={`${designs.d5}`}>
                   {moment(item.from_time).format("HH:mm:ss")}
                 </h1>
-                <div className={`${designs.d5}`}>
-                  <button
+                <h1 className={`${designs.d5}`}>{item.destination}</h1>
+                <h1 className={`${designs.d5}`}>{item.status}</h1>        
+                  {/* <button
                     id={`button ${idx}`}
                     name={item.request_id}
                     onClick={() => {
@@ -73,8 +77,7 @@ const W4_3_ReportTable = ({data}) => {
                     className=" bg-Navbar_bg p-2 text-white hover:border-2"
                   >
                     Open
-                  </button>
-                </div>
+                  </button> */}
               </div>
             ))}
           </div>
@@ -96,7 +99,9 @@ const W4_3_ReportTable = ({data}) => {
           Next
         </button>
       </div>
+    </div>}
     </div>
   );
+  
 };
 export default W4_3_ReportTable;

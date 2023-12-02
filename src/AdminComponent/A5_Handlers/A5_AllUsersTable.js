@@ -18,7 +18,7 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
 
     const filteredStartingIndex = (page_number - 1) * 5;
 
-    const usersToDisplay = filteredUserData.slice(filteredStartingIndex, filteredStartingIndex + 5);
+    // const usersToDisplay = filteredUserData.slice(filteredStartingIndex, filteredStartingIndex + 5);
 
     return (
         <div className={`bg-background`}>
@@ -56,7 +56,7 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
                 </div>
 
                 <div className={`${designs.d3}`}>
-                    {usersToDisplay.map((item, idx) => (
+                    {filteredUserData.map((item, idx) => (
                         <div className={`${designs.d4} hover:bg-Items_bg hover:border border-black hover:cursor-pointer`} key={idx} onClick={() => {
                             setShowUpdateUser(true);
                             console.log(item.user_id)

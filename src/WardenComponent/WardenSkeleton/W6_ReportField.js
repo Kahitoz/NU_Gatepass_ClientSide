@@ -103,7 +103,7 @@ const W6_ReportField = ({ updateTableData }) => {
           />
 
           <input
-            type="text"
+            type="date"
             className="me-2 p-2 mt-4 rounded-lg"
             placeholder="From Date  yyyy-mm-dd"
             value={sdate}
@@ -111,7 +111,7 @@ const W6_ReportField = ({ updateTableData }) => {
           />
 
           <input
-            type="text"
+            type="date"
             className="me-2 p-2 mt-4 rounded-lg"
             placeholder="To Date yyyy-mm-dd"
             value={edate}
