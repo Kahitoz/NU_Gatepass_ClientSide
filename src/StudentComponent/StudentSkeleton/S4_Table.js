@@ -38,6 +38,7 @@ const S4_table = () => {
     if (
       status === "CHECKEDOUT" ||
       status === "CHECKEDIN" ||
+      status === "Rejected" ||
       status === "Cancelled"
     ) {
     } else {
